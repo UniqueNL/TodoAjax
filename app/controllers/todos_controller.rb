@@ -28,10 +28,14 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
 
-    # app/controllers/todos_controller.rb (create method)
-        respond_to do |format|
-          if @todo.save
-            format.html { redirect_to todos_path, notice: 'Todo was successfully created.' }
+    respond_to do |format|
+      if @todo.save
+        format.html { redirect_to todos_path, notice: 'Todo was successfully created.' }
+      else
+        format.html { render :new }
+        format.json { render json: @todo.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # PATCH/PUT /todos/1
