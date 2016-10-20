@@ -4,7 +4,9 @@ class TodosController < ApplicationController
   # GET /todos
   # GET /todos.json
   def index
-    @todos = Todo.all
+    @todo = Todo.new
+    # also order the todo's
+    @todos = Todo.order(:id)
   end
 
   # GET /todos/1
@@ -26,15 +28,10 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
 
-    respond_to do |format|
-      if @todo.save
-        format.html { redirect_to @todo, notice: 'Todo was successfully created.' }
-        format.json { render :show, status: :created, location: @todo }
-      else
-        format.html { render :new }
-        format.json { render json: @todo.errors, status: :unprocessable_entity }
-      end
-    end
+    # app/controllers/todos_controller.rb (create method)
+        respond_to do |format|
+          if @todo.save
+            format.html { redirect_to todos_path, notice: 'Todo was successfully created.' }
   end
 
   # PATCH/PUT /todos/1
